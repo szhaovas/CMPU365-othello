@@ -272,40 +272,41 @@
        (nth (+ (* i 2) 1) key-move-acc))
       ;; accumulator
       simtree-moves))
-    (format t "merge success!~%")
+    ;;(format t "merge success!~%")
     (setf move-acc (append (reverse simtree-moves) move-acc))))
 
 (defun sublist-member
   (item listy till)
-  (format t "sublist-member start!~%")
+  ;;(format t "sublist-member start!~%")
   (let ((i 0))
     (while (<= i (- till 2))
       (when
         (equal
          item
          (nth i listy))
-        (format t "sub T~%")
+        ;;(format t "sub T~%")
         (return-from sublist-member t))
       (incf i 2))
-    (format t "sub NIL~%")
+    ;;(format t "sub NIL~%")
     nil))
 
 (defun array-member
   (item arr)
-  (format t "array-member start!~%")
+  ;;(format t "array-member start!~%")
   (dotimes
    (i (length arr))
    (when
      (equal
       item
       (svref arr i))
-     (format t "arr ind ~A~%" i)
+     ;;(format t "arr ind ~A~%" i)
      (return-from array-member i)))
-  (format t "arr ind NIL~%")
+  ;;(format t "arr ind NIL~%")
   nil)
 
 (defun backup
   (hashy key-move-acc move-acc)
+  (format t "starting backup...~%")
   (merge-moves key-move-acc move-acc hashy)
   (while key-move-acc
     (let*
