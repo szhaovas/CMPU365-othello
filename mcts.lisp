@@ -306,11 +306,10 @@
 
 (defun backup
   (hashy key-move-acc move-acc)
-  ;;(format t "starting backup...~%")
+  (format t "starting backup...~%")
   (merge-moves key-move-acc move-acc hashy)
   (let ((result (first (last move-acc))))
     (while key-move-acc
-      (format t "backup loop starts!~%")
       (let*
         ((key (pop key-move-acc))
      	   (nodey (gethash key hashy))
