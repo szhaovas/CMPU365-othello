@@ -127,6 +127,7 @@
 
 (defun select-move
   (nodey k)
+  (format t "starting selectmv!~%")
   (let*
     ((player (mc-node-whose-turn nodey))
    	 (moves (mc-node-veck-moves nodey))
