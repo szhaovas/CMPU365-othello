@@ -306,9 +306,10 @@
 
 (defun backup
   (hashy key-move-acc move-acc)
-  (format t "starting backup...~%")
+  ;;(format t "starting backup...~%")
   (merge-moves key-move-acc move-acc hashy)
   (while key-move-acc
+    (format t "backup loop starts!~%")
     (let*
       ((result (first (last move-acc)))
        (key (pop key-move-acc))
@@ -325,6 +326,7 @@
       (incf (svref mc-scores mv-index)
        	    (/ (- result (svref mc-scores mv-index))
        	       (svref mc-visits mv-index)))
+      (format t "break 1 !~%")
       (let ((i 0))
         ;; the last entry is result
         (while (< i (- (length move-acc) 1))
@@ -344,7 +346,7 @@
                	    (/ (- result (svref amaf-scores legal-p))
                	       (svref amaf-visits legal-p)))))
           (incf i 2))
-        (format t "backup success!~%")
+        ;;(format t "backup success!~%")
         (setf move-acc (rest move-acc))))))
 
 ;;  UCT-SEARCH
