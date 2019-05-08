@@ -320,13 +320,13 @@
        (mc-scores (mc-node-veck-scores nodey))
        (amaf-visits (mc-node-amaf-visits nodey))
        (amaf-scores (mc-node-amaf-scores nodey)))
+      (format t "break 1 !~%")
       ;; increment MC stats
       (incf (mc-node-num-visits nodey))
       (incf (svref mc-visits mv-index))
       (incf (svref mc-scores mv-index)
        	    (/ (- result (svref mc-scores mv-index))
        	       (svref mc-visits mv-index)))
-      (format t "break 1 !~%")
       (let ((i 0))
         ;; the last entry is result
         (while (< i (- (length move-acc) 1))
