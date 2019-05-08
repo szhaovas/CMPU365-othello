@@ -320,8 +320,7 @@
          (mc-scores (mc-node-veck-scores nodey))
          (amaf-visits (mc-node-amaf-visits nodey))
          (amaf-scores (mc-node-amaf-scores nodey)))
-        (format t "~A~%" mv-index)
-        (format t "~A~%" result)
+        (format t "~A~%" (last move-acc 4))
         ;; increment MC stats
         (incf (mc-node-num-visits nodey))
         (incf (svref mc-visits mv-index))
