@@ -277,6 +277,7 @@
 
 (defun sublist-member
   (item listy till)
+  (format t "sublist-member start!~%")
   (let ((i 0))
     (while (<= i (- till 2))
       (when
@@ -291,6 +292,7 @@
 
 (defun array-member
   (item arr)
+  (format t "array-member start!~%")
   (dotimes
    (i (length arr))
    (when
