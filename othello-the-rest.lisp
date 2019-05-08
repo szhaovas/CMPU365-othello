@@ -328,6 +328,26 @@
      (t
       0))))
 
+(defmethod eval-func
+  ((game othello))
+ 	(let*
+    ((counts (count-tokens game))
+   	 (whites (first counts))
+   	 (blacks (second counts))
+   	 (diff (- blacks whites)))
+    ;; The winner's score is the square root of the difference
+    ;; of the number of tokens.  Black win is positive, White negative.
+    (cond
+      ;; Case 1:  BLACK won
+      ((< diff 0)
+       (- 0 (sqrt (abs diff))))
+      ;; Case 2:  WHITE won
+      ((> diff 0)
+       (sqrt diff))
+      ;; Case 3:  A tie!
+      (t
+       0))))
+
 ;;  RANDOM-MOVE
 ;; ------------------------------------------
 ;;  INPUT:  GAME, an OTHELLO struct

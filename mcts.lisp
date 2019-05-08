@@ -418,8 +418,8 @@
       (cond
        ((eq (whose-turn g) *black*)
 	(format t "B ")
-	(apply #'do-move! g (mc-rave g nil black-num-sims black-k)))
+	(apply #'do-move! g nil (mc-rave g black-num-sims black-k)))
        (t
 	(format t "W ")
-	(apply #'do-move! g (mc-rave g nil white-num-sims white-k)))))
+	(apply #'do-move! g nil (mc-rave g white-num-sims white-k)))))
     (format t "~%~A~%" g)))
