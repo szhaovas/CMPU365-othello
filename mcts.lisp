@@ -127,7 +127,7 @@
 
 (defun select-move
   (nodey k)
-  (format t "starting selectmv!~%")
+  ;;(format t "starting selectmv!~%")
   (let*
     ((player (mc-node-whose-turn nodey))
    	 (moves (mc-node-veck-moves nodey))
@@ -172,7 +172,7 @@
               (setf best-score-so-far weighted-score)
               (setf best-move-so-far i))))
         	;; Return best-move-so-far or (if NIL) a random move
-         (format t "selectmv success!~%")
+         ;;(format t "selectmv success!~%")
          (if best-move-so-far
            best-move-so-far
            (random num-moves)))))))
@@ -209,7 +209,7 @@
        	    (push mv-index key-move-acc)
        	    ;; return the accumulator prepended with selected MOVE
        	    ;; and KEY for current state
-            (format t "tree success!~%")
+            ;;(format t "tree success!~%")
        	    (return-from sim-tree (reverse key-move-acc))))
 
        	;; Case 2:  Key already in tree!
@@ -221,7 +221,7 @@
        	  (push mv-index key-move-acc))))
 
     ;; After the WHILE... return the accumulated key/move list
-    (format t "tree success!~%")
+    ;;(format t "tree success!~%")
     (reverse key-move-acc)))
 
 ;;  SIM-DEFAULT
@@ -238,7 +238,7 @@
         (apply #'do-move! game nil move)
         (push move move-acc)))
     (push (eval-func game) move-acc)
-    (format t "default success!~%")
+    ;;(format t "default success!~%")
     (reverse move-acc)))
 
 ;;  BACKUP
@@ -272,6 +272,7 @@
        (nth (+ (* i 2) 1) key-move-acc))
       ;; accumulator
       simtree-moves))
+    (format t "merge success!~%")
     (setf move-acc (append (reverse simtree-moves) move-acc))))
 
 (defun sublist-member
@@ -282,8 +283,10 @@
         (equal
          item
          (nth i listy))
+        (format t "sub T~%")
         (return-from sublist-member t))
       (incf i 2))
+    (format t "sub NIL~%")
     nil))
 
 (defun array-member
@@ -294,7 +297,9 @@
      (equal
       item
       (svref arr i))
+     (format t "arr ind ~A~%" i)
      (return-from array-member i)))
+  (format t "arr ind NIL~%")
   nil)
 
 (defun backup
