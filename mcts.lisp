@@ -308,47 +308,47 @@
   (hashy key-move-acc move-acc)
   ;;(format t "starting backup...~%")
   (merge-moves key-move-acc move-acc hashy)
-  (while key-move-acc
-    (format t "backup loop starts!~%")
-    (let*
-      ((result (first (last move-acc)))
-       (key (pop key-move-acc))
-   	   (nodey (gethash key hashy))
-   	   (mv-index (pop key-move-acc))
-       (veck-moves (mc-node-veck-moves nodey))
-       (mc-visits (mc-node-veck-visits nodey))
-       (mc-scores (mc-node-veck-scores nodey))
-       (amaf-visits (mc-node-amaf-visits nodey))
-       (amaf-scores (mc-node-amaf-scores nodey)))
-      (format t "~A~%" mv-index)
-      (format t "~A~%" result)
-      ;; increment MC stats
-      (incf (mc-node-num-visits nodey))
-      (incf (svref mc-visits mv-index))
-      (incf (svref mc-scores mv-index)
-       	    (/ (- result (svref mc-scores mv-index))
-       	       (svref mc-visits mv-index)))
-      (let ((i 0))
-        ;; the last entry is result
-        (while (< i (- (length move-acc) 1))
-          (let*
-            ((mv (nth i move-acc))
-             ;; is move_i legal at current state?
-             (legal-p (array-member mv veck-moves)))
-            (when
-              (and
-               ;; move-i is legal at current state
-               legal-p
-               ;; move_i is not within the seen moves
-               (not (sublist-member mv move-acc i)))
-              ;; updates AMAF
-              (incf (svref amaf-visits legal-p))
-              (incf (svref amaf-scores legal-p)
-               	    (/ (- result (svref amaf-scores legal-p))
-               	       (svref amaf-visits legal-p)))))
-          (incf i 2))
-        ;;(format t "backup success!~%")
-        (setf move-acc (rest move-acc))))))
+  (let ((result (first (last move-acc))))
+    (while key-move-acc
+      (format t "backup loop starts!~%")
+      (let*
+        ((key (pop key-move-acc))
+     	   (nodey (gethash key hashy))
+     	   (mv-index (pop key-move-acc))
+         (veck-moves (mc-node-veck-moves nodey))
+         (mc-visits (mc-node-veck-visits nodey))
+         (mc-scores (mc-node-veck-scores nodey))
+         (amaf-visits (mc-node-amaf-visits nodey))
+         (amaf-scores (mc-node-amaf-scores nodey)))
+        (format t "~A~%" mv-index)
+        (format t "~A~%" result)
+        ;; increment MC stats
+        (incf (mc-node-num-visits nodey))
+        (incf (svref mc-visits mv-index))
+        (incf (svref mc-scores mv-index)
+         	    (/ (- result (svref mc-scores mv-index))
+         	       (svref mc-visits mv-index)))
+        (let ((i 0))
+          ;; the last entry is result
+          (while (< i (- (length move-acc) 1))
+            (let*
+              ((mv (nth i move-acc))
+               ;; is move_i legal at current state?
+               (legal-p (array-member mv veck-moves)))
+              (when
+                (and
+                 ;; move-i is legal at current state
+                 legal-p
+                 ;; move_i is not within the seen moves
+                 (not (sublist-member mv move-acc i)))
+                ;; updates AMAF
+                (incf (svref amaf-visits legal-p))
+                (incf (svref amaf-scores legal-p)
+                 	    (/ (- result (svref amaf-scores legal-p))
+                 	       (svref amaf-visits legal-p)))))
+            (incf i 2))
+          ;;(format t "backup success!~%")
+          (setf move-acc (rest move-acc)))))))
 
 ;;  UCT-SEARCH
 ;; ---------------------------------
